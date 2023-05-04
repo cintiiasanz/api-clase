@@ -2,6 +2,11 @@ const express = require("express");
 
 const servidor = express();
 
+servidor.use((peticion,respuesta,siguiente) => {
+    respuesta.header("Access-Control-Allow-Origin","*"); //* el asterisco dice que cualquiera se puede conectar
+    siguiente();
+});
+
 servidor.get("/", (peticion,respuesta) => {
     let [r,g,b] = [0,0,0].map(() => Math.floor(Math.random()*256));
     respuesta.json({r,g,b});
@@ -13,3 +18,5 @@ servidor.use((peticion,respuesta) => {
 });
 
 servidor.listen(4000);
+
+
